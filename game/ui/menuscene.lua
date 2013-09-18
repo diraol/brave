@@ -1,8 +1,8 @@
 module ('ui', package.seeall) do
 
-  require 'game.scene'
+  require 'base.message'
+  require 'base.scene'
   require 'ui.button'
-  require 'game.message'
 
   menuscene = scene:new{
     xcenter = 400,

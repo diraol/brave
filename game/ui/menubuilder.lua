@@ -2,8 +2,8 @@
 module ('ui', package.seeall) do
 
   require 'ui.menuscene'
-  require 'game.message'
-  require 'game.dungeon.map'
+  require 'base.message'
+  require 'dungeon.map'
 
   local themes = {
     default = theme:new {

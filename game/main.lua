@@ -1,6 +1,6 @@
-require 'game.vec2'
-require 'game.message'
-require 'game.sound'
+require 'base.vec2'
+require 'base.message'
+require 'base.sound'
 require 'ui.menubuilder'
 
 local debug = false
