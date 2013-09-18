@@ -1,4 +1,5 @@
 
+-- no module on purpose, so you don't have to use scene.scene
 require 'lux.object'
 
 scene = lux.object.new {
