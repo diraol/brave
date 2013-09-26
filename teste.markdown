@@ -1,5 +1,12 @@
 ---
-layout: midnight
+template: midnight
+category: team
+permalink: /testes/teste
+
+subtitle: UI Lead + Developer
+image: /images/team/young.jpg
+twitter: younghahn
+github: yhahn
 title: This will be used as the title-tag of the page head
 ---
 
