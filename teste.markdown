@@ -1,7 +1,7 @@
 ---
 template: midnight
 category: team
-permalink: /testes/teste
+permalink: /testes/teste.html
 
 subtitle: UI Lead + Developer
 image: /images/team/young.jpg
