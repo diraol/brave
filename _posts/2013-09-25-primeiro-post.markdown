@@ -14,6 +14,7 @@ Nesta quarta-feira (25/09/2013) haviam duas propostas de game. Elaboramos um pou
 
 Baseado no que foi debatido, foi concenso no grupo a escolha de uma das opções.
 
-Aqui podem ser encontradas mais informações:
+[Aqui][workflowy] podem ser encontradas mais informações:
 
-https://workflowy.com/shared/79646f6e-8aaf-6d01-fe23-057190296e34/
+
+[workflowy]: https://workflowy.com/shared/79646f6e-8aaf-6d01-fe23-057190296e34/
