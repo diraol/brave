@@ -37,7 +37,7 @@ module ('ui', package.seeall) do
       ystart = 100,
       border = 20,
       buttons = {
-        button:new{ text = "Go to <Dungeon>", onclick = dungeon.map.enter, themes = themes },
+        button:new{ text = "Go to <Dungeon>", onclick = dungeon.enter, themes = themes },
         button:new{ text = "Quit", onclick = closemenu, themes = themes },
       }
     }
