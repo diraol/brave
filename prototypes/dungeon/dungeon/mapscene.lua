@@ -8,11 +8,11 @@ module ('dungeon', package.seeall) do
   mapscene = scene:new{}
 
   function mapscene:__init()
-    self.hero = love.graphics.newImage 'resources/avt1_fr1.gif'
-    self.hero_pos = vec2:new{1, 1}
-
     assert(self.width)
     assert(self.height)
+
+    self.entities = {}
+    self.pending_entities = {}
 
     self.matrix = {}
     for j = 1,self.height do
@@ -26,24 +26,31 @@ module ('dungeon', package.seeall) do
     end
   end
 
+  function mapscene:add_entity(entity)
+    entity.map = self
+    table.insert(self.pending_entities, entity)
+  end
+
   function mapscene:get_tile(pos)
     return self.matrix[pos.y] and self.matrix[pos.y][pos.x]
   end
 
   function mapscene:input_pressed(button)
-    local next_pos = self.hero_pos:clone()
-    if button == 'right' then
-      next_pos.x = next_pos.x + 1
-    elseif button == 'left' then
-      next_pos.x = next_pos.x - 1
-    elseif button == 'up' then
-      next_pos.y = next_pos.y - 1
-    elseif button == 'down' then
-      next_pos.y = next_pos.y + 1
+    for _, entity in ipairs(self.entities) do
+      if entity.input_pressed then
+        entity:input_pressed(button)
+      end
     end
-    local next_tile = self:get_tile(next_pos)
-    if next_tile and next_tile.passable then
-      self.hero_pos = next_pos
+  end
+
+  function mapscene:update(dt)
+    for _, pending in ipairs(self.pending_entities) do
+      table.insert(self.entities, pending)
+    end
+    self.pending_entities = {}
+
+    for _, entity in ipairs(self.entities) do
+      entity:update(dt)
     end
   end
 
@@ -55,7 +62,8 @@ module ('dungeon', package.seeall) do
         end
       end
     end
-    graphics.setColor(255, 255, 255)
-    graphics.draw(self.hero, (self.hero_pos * TILE_SIZE):get())
+    for _, entity in ipairs(self.entities) do
+      entity:draw(graphics)
+    end
   end
 end
