@@ -3,7 +3,7 @@ module ('ui', package.seeall) do
 
   require 'ui.menuscene'
   require 'base.message'
-  require 'dungeon.map'
+  require 'dungeon.loader'
 
   local themes = {
     default = theme:new {

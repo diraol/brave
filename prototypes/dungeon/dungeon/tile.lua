@@ -14,7 +14,7 @@ module ('dungeon', package.seeall) do
 
   function tile:draw(graphics, x, y)
     if self.passable then
-      graphics.setColor(255, 255, 255)
+      graphics.setColor(230, 230, 230)
     else
       graphics.setColor(127, 127, 127)
     end

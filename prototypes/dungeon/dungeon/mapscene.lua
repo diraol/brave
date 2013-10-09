@@ -5,14 +5,15 @@ module ('dungeon', package.seeall) do
   require 'base.vec2'
   require 'dungeon.tile'
 
-  local mapscene = scene:new{}
+  mapscene = scene:new{}
 
   function mapscene:__init()
     self.hero = love.graphics.newImage 'resources/avt1_fr1.gif'
     self.hero_pos = vec2:new{1, 1}
 
-    self.height = 8
-    self.width = 15
+    assert(self.width)
+    assert(self.height)
+
     self.matrix = {}
     for j = 1,self.height do
       self.matrix[j] = {}
@@ -54,11 +55,7 @@ module ('dungeon', package.seeall) do
         end
       end
     end
-    graphics.draw(self.hero, (self.hero_pos * 32):get())
+    graphics.setColor(255, 255, 255)
+    graphics.draw(self.hero, (self.hero_pos * TILE_SIZE):get())
   end
-
-  function enter()
-    message.send [[main]] {'change_scene', mapscene:new{} }
-  end
-
 end
