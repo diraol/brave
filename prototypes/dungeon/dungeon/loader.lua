@@ -14,10 +14,9 @@ module ('dungeon', package.seeall) do
     end
 
     local slime = builder.slime()
-    slime.position = vec2:new{12, 7}
 
-    map:add_entity(builder.hero())
-    map:add_entity(slime)
+    map:add_entity(builder.hero(),vec2:new{1,1})
+    map:add_entity(slime,vec2:new{12,7})
 
     message.send [[main]] {'change_scene', map }
   end
