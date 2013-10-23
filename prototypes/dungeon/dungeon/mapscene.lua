@@ -5,14 +5,16 @@ module ('dungeon', package.seeall) do
   require 'base.vec2'
   require 'dungeon.tile'
 
-  mapscene = scene:new{}
+  mapscene = scene:new{
+    width = nil,
+    height = nil,
+  }
 
   function mapscene:__init()
     assert(self.width)
     assert(self.height)
 
-    self.entities = {}
-    self.pending_entities = {}
+    self.timeline = {}
 
     self.matrix = {}
     for j = 1,self.height do
@@ -26,9 +28,14 @@ module ('dungeon', package.seeall) do
     end
   end
 
-  function mapscene:add_entity(entity)
+  function mapscene:add_entity(entity, pos)
+    if not self:get_tile(pos):add_entity(entity) then
+      print "Espaço indisponível"
+      return
+    end
     entity.map = self
-    table.insert(self.pending_entities, entity)
+    entity.position = pos
+    table.insert(self.timeline, entity)
   end
 
   function mapscene:get_tile(pos)
@@ -36,22 +43,10 @@ module ('dungeon', package.seeall) do
   end
 
   function mapscene:input_pressed(button)
-    for _, entity in ipairs(self.entities) do
-      if entity.input_pressed then
-        entity:input_pressed(button)
-      end
-    end
+    self.hero:input_pressed(button)  
   end
 
   function mapscene:update(dt)
-    for _, pending in ipairs(self.pending_entities) do
-      table.insert(self.entities, pending)
-    end
-    self.pending_entities = {}
-
-    for _, entity in ipairs(self.entities) do
-      entity:update(dt)
-    end
   end
 
   function mapscene:draw(graphics)
@@ -61,9 +56,6 @@ module ('dungeon', package.seeall) do
           self.matrix[j][i]:draw(graphics, i, j)
         end
       end
-    end
-    for _, entity in ipairs(self.entities) do
-      entity:draw(graphics)
     end
   end
 end
