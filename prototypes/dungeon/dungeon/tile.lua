@@ -24,6 +24,10 @@ module ('dungeon', package.seeall) do
     end
   end
 
+  function tile:remove_entity()
+    self.entity = nil
+  end
+  
   function tile:draw(graphics, x, y)
     if self.passable then
       graphics.setColor(230, 230, 230)
