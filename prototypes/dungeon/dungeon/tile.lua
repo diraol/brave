@@ -15,12 +15,16 @@ module ('dungeon', package.seeall) do
     self.passable = self.passable or true
   end
 
+  function tile:available()
+      return not self.entity and self.passable
+  end
+
   function tile:add_entity(entity)
-    if self.entity then
-      return false
-    else
+    if self:available() then
       self.entity = entity
       return true
+    else
+      return false
     end
   end
 
