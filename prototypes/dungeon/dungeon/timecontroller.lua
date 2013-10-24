@@ -22,7 +22,8 @@ module ('dungeon', package.seeall) do
   end
 
   function timecontroller:start()
-      coroutine.resume(self.routine,self)
+      local ok, err = coroutine.resume(self.routine,self)
+      if not ok then error(err) end
   end
 
   function timecontroller:run()

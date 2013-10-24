@@ -12,7 +12,11 @@ module ('dungeon', package.seeall) do
   }
 
   function mapscene:__init()
-    self.timecontroller = timecontroller:new{map = map}
+    self.timecontroller = timecontroller:new{map = self.map}
+  end
+
+  function mapscene:focus()
+    self.timecontroller:start()
   end
 
   function mapscene:input_pressed(button)
