@@ -18,8 +18,15 @@ module ('dungeon', package.seeall) do
 
     local slime = builder.slime()
 
-    dungeonscene.timecontroller:add_entity(builder.hero(),vec2:new{1,1})
+    local hero = builder.hero()
+
+    dungeonscene.timecontroller:add_entity(hero,vec2:new{1,1})
     dungeonscene.timecontroller:add_entity(slime,vec2:new{12,7})
+
+    function dungeonscene:input_pressed(button)
+      local ok, err = coroutine.resume(self.timecontroller.routine,button)
+      if not ok then error(err) end
+    end
 
     message.send [[main]] {'change_scene', dungeonscene }
   end

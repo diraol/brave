@@ -19,10 +19,6 @@ module ('dungeon', package.seeall) do
     self.timecontroller:start()
   end
 
-  function mapscene:input_pressed(button)
-    self.hero:input_pressed(button)  
-  end
-
   function mapscene:update(dt)
   end
 

@@ -18,6 +18,7 @@ module ('dungeon', package.seeall) do
       return
     end
     entity.position = pos
+    entity.map = self.map
     table.insert(self.timeline, entity)
   end
 
@@ -27,10 +28,12 @@ module ('dungeon', package.seeall) do
   end
 
   function timecontroller:run()
-      local entity = self.timeline[1]
-      table.remove(self.timeline,1)
-      entity:playturn()
-      table.insert(self.timeline,entity)
+      while true do
+        local entity = self.timeline[1]
+        table.remove(self.timeline,1)
+        entity:playturn()
+        table.insert(self.timeline,entity)
+    end
   end
 
 end
