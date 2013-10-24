@@ -20,9 +20,12 @@ module ('dungeon', package.seeall) do
   end
   
   function entity:draw(graphics)
-    if self.image then
+    if self.image and self.position then
+      local draw_pos = self.position * TILE_SIZE
+      draw_pos.y = draw_pos.y + TILE_SIZE - self.image:getHeight()
+
       graphics.setColor(255, 255, 255)
-      graphics.draw(self.image, (self.position * TILE_SIZE):get())
+      graphics.draw(self.image, draw_pos:get())
     end
   end
 end

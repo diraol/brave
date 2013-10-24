@@ -5,7 +5,7 @@ module ('dungeon.builder', package.seeall) do
 
   function hero()
     local hero = dungeon.entity:new {
-      image = love.graphics.newImage 'resources/avt1_fr1.gif',
+      image = love.graphics.newImage 'resources/entities/herov0.png',
     }
     function hero:playturn()
       local button = coroutine.yield()
