@@ -23,6 +23,10 @@ module ('dungeon.builder', package.seeall) do
         self.position = next_pos
       end
     end
+    function hero:playturn()
+      local input = coroutine.yield()
+      error("bla")
+    end
     return hero
   end
 

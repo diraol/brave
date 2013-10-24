@@ -16,6 +16,9 @@ module ('dungeon', package.seeall) do
   function entity:update(dt)
   end
 
+  function entity:playturn()
+  end
+  
   function entity:draw(graphics)
     if self.image then
       graphics.setColor(255, 255, 255)
