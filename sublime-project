@@ -2,7 +2,7 @@
     "folders":
     [
         {
-            "path": "dungeon"
+            "path": "brave"
         }
     ],
     "settings":
@@ -19,7 +19,7 @@
         {
             "name": "Love2D",
             "working_dir": "${project_path}",
-            "cmd": ["love", "dungeon"]
+            "cmd": ["love", "brave"]
         }
     ]
 }
