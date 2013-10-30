@@ -16,9 +16,19 @@ module ('dungeon', package.seeall) do
   }
 
   function enter()
+    local tileset = {
+      ground = love.graphics.newImage 'resources/tiles/floor-wood-01.png'
+    }
     local map = map:new { width = 15, height = 8 }
     for j = 3,map.height do
       map.matrix[j][7].passable = false
+    end
+    for j = 1,map.height do
+      for i = 1,map.width do
+        if map.matrix[j][i] and map.matrix[j][i].passable then
+          map.matrix[j][i].image = tileset.ground
+        end
+      end
     end
 
     local dungeonscene = mapscene:new { map = map }

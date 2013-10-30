@@ -68,5 +68,5 @@ function love.mousereleased (x, y, button)
 end
 
 function love.draw ()
-  current_scene:draw(love.graphics)
+  current_scene:draw(graphics)
 end

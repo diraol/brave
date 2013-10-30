@@ -21,6 +21,11 @@ module ('dungeon', package.seeall) do
         self.matrix[j][i] = tile:new{}
       end
     end
+
+    self.visible_size = vec2:new{
+      self.width * TILE_SIZE,
+      self.height * TILE_SIZE,
+    }
   end
 
   function map:get_tile(pos)

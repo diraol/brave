@@ -23,8 +23,6 @@ module ('dungeon', package.seeall) do
 
   function entity:die()
     self.timecontroller:remove_entity(self)
-
-    
   end
 
   function entity:take_damage(damage)
