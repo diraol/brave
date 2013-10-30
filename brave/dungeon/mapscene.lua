@@ -13,6 +13,7 @@ module ('dungeon', package.seeall) do
 
   function mapscene:__init()
     self.timecontroller = timecontroller:new{map = self.map}
+    self.inputstate = {}
   end
 
   function mapscene:focus()
@@ -23,6 +24,6 @@ module ('dungeon', package.seeall) do
   end
 
   function mapscene:draw(graphics)
-    self.map:draw(graphics)
+    self.map:draw(graphics, self.inputstate)
   end
 end

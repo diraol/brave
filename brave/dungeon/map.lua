@@ -27,11 +27,11 @@ module ('dungeon', package.seeall) do
     return self.matrix[pos.y] and self.matrix[pos.y][pos.x]
   end
 
-  function map:draw(graphics)
+  function map:draw(graphics, state)
     for j = 1,self.height do
       for i = 1,self.width do
         if self.matrix[j][i] then
-          self.matrix[j][i]:draw(graphics, i, j)
+          self.matrix[j][i]:draw(graphics, i, j, state)
         end
       end
     end
