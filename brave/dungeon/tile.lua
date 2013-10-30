@@ -47,7 +47,9 @@ module ('dungeon', package.seeall) do
       graphics.setColor(127, 127, 127)
     end
     if self.image then
-      graphics.draw(self.image, x * TILE_SIZE, y * TILE_SIZE)
+      local draw_x = x * TILE_SIZE + (TILE_SIZE - self.image:getWidth()) * 0.5
+      local draw_y = y * TILE_SIZE + (TILE_SIZE - self.image:getHeight())
+      graphics.draw(self.image, draw_x, draw_y)
     else
       graphics.rectangle('fill', x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
     end
