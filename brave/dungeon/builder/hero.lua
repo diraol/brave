@@ -9,6 +9,7 @@ module ('dungeon.builder', package.seeall) do
     }
     hero.weapon = {
       range = 1,
+      damage = 10,
 
       can_attack = function(self, pos)
         local dist = (pos - hero.position):norm1()
@@ -26,8 +27,17 @@ module ('dungeon.builder', package.seeall) do
           self.map:get_tile(next_pos):add_entity(self)
           self.position = next_pos
         end
+
+      elseif action == 'attack' then
+        local target_pos = self.position + direction
+        local target_tile = self.map:get_tile(target_pos)
+        if target_tile and target_tile.entity then
+          target_tile.entity:take_damage(self.weapon.damage)
+        end
+
       else
         error(action)
+
       end
     end
     return hero

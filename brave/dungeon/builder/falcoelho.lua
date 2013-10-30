@@ -9,6 +9,8 @@ module ('dungeon.builder', package.seeall) do
       scale = 0.5,
     }
     function falcoelho:playturn()
+      if math.random() < 0.75 then return end
+
       local next_pos = self.position:clone()
       local r = math.random()
       if r < 0.25 then

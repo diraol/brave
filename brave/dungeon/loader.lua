@@ -24,6 +24,7 @@ module ('dungeon', package.seeall) do
     local dungeonscene = mapscene:new { map = map }
     dungeonscene.inputstate.selection_image = love.graphics.newImage 'resources/cursor.png'
     function dungeonscene:input_pressed(button)
+
       function run_action(...)
         assert(coroutine.resume(self.timecontroller.routine, ...))
       end
@@ -65,7 +66,6 @@ module ('dungeon', package.seeall) do
         self.inputstate.attacking = nil
         self.inputstate.confirm_attack = nil
       end
-
     end
 
     local hero = builder.hero()

@@ -7,6 +7,7 @@ module ('dungeon', package.seeall) do
 
   entity = lux.object.new{
     scale = 1.0,
+    hp = 50,
     image = nil
   }
 
@@ -18,6 +19,19 @@ module ('dungeon', package.seeall) do
   end
 
   function entity:playturn()
+  end
+
+  function entity:die()
+    self.timecontroller:remove_entity(self)
+
+    
+  end
+
+  function entity:take_damage(damage)
+    self.hp = self.hp - damage
+    if self.hp <= 0 then
+      self:die()
+    end
   end
   
   function entity:draw(graphics)
