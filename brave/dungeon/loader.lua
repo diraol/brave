@@ -24,6 +24,8 @@ module ('dungeon', package.seeall) do
     for j = 3,map.height do
       map.matrix[j][7].passable = false
     end
+    map.matrix[4][3].passable = false
+    map.matrix[4][4].passable = false
     for j = 1,map.height do
       for i = 1,map.width do
         if map.matrix[j][i] then
