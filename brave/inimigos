@@ -1,0 +1,68 @@
+Comportamento dos inimigos
+
+descrição:
+
+
+FALCOELHO
+
+1. agressividade - baixa | não perseguidor
+
+2. trigger - irá atacar o jogador apenas se for atacado primeiro ou se o jogador passar em um tile anexo
+
+3. persistência - baixa | condição - distância | irá manter o combate enquanto o jogador estiver até 3 tiles de distância
+
+4. ações:
+  a. ataque bico | ataque comum nos tiles anexos | dano - baixo | alcance - muito curto (1T)
+  b. ataque pulo | ataque que avança 1 tile| dano - médio | alcance - curto (2T)
+  c. defender | reduz dano em 50% - 70% | duração - 1 turno
+  d. fugir | RUN!
+  
+5. comportamento:
+  100% HP - a.4 b.1,5 c.0,3 d.0,1
+  66% HP - a.2 b.2,5 c.1 d.0,5
+  33% HP - a.1 b.2,5 c.3 d.2
+  
+6. loot - poção vida e dinheiro
+
+
+CROCOCHORRO
+
+1. agressividade - alta | perseguidor
+
+2. trigger - irá atacar o jogador a 3 tiles ou menos e irá "stalkear" o jogador a mais de 3 tiles
+
+3. persistência - alta | condição - vida | irá manter o combate enquanto o jogador independete da distância enquanto seu HP for maior que 10%
+
+4. ações:
+  a. ataque mordida | ataque comum nos tiles anexos | dano - médio | alcance - muito curto (1T)
+  b. ataque travar | morde e agarra o jogador | dano médio inicial e dano baixo por turno enquanto ficar agarrado | duração - 3 turnos | efeitos - redução mobilidade
+  c. defender | reduz dano em 50% - 70% | duração - 1 turno
+  
+5. comportamento:
+  100% HP - a.4 b.1 c.0,3
+  66% HP - a.2 b.2 c.3
+  33% HP - a.1 b.4 c.4
+  
+6. loot - poção vida, dinheiro, pele 
+
+
+PANDARILA
+
+1. agressividade - alta | pouco perseguidor
+
+2. trigger - irá atacar o jogador a 5 tiles ou menos de distância
+
+3. persistência - média | perseguirá jogadores até 5 tiles de distância, durante 4 turnos | desiste caso o jogador saia dessa área ou passe o tempo
+
+4. ações:
+  a. ataque patata | ataque comum nos tiles anexos | dano - alto | alcance - longo (2T)(sem diagonais)
+  b. ataque área | ataque em todos os tiles ao redor | dano - médio | alcance - muito curto (1T)
+  c. empurrar | lança o jogador a 3 tiles de distância | dano - baixo | alcance - muito curto (agarrão)
+  d. defender | reduz dano em 50% - 70% | duração - 1 turno
+  
+5. comportamento:
+  100% HP - a.4 b.2 c.1 d.0,3
+  66% HP - a.1 b.3 c.3 d.1
+  33% HP - a.0,5 b.1 c.2,5 d.4
+  
+6. loot - poção vida, dinheiro, chave do bau, pele
