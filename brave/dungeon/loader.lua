@@ -16,25 +16,39 @@ module ('dungeon', package.seeall) do
   }
 
   function enter()
-    local tileset = {
-      ground = love.graphics.newImage 'resources/tiles/floor-wood-01.png',
-      wall   = love.graphics.newImage 'resources/tiles/wall-brickwood-00.png',
-    }
-    local map = map:new { width = 15, height = 8 }
-    for j = 3,map.height do
-      map.matrix[j][7].passable = false
+    local types = (love.filesystem.load "dungeon/levels/tiles.lua")()
+    local content = (love.filesystem.read "dungeon/levels/1.txt"):gsub("\r", "")
+
+    local has_extra = (content:sub(#content) == '\n')
+    local width, height = content:find("\n", 1, true) - 1, nil
+
+    content, height = content:gsub("\n", "")
+    content = content:gsub("\r", "")
+    if not has_extra then
+      height = height + 1
     end
-    map.matrix[4][3].passable = false
-    map.matrix[4][4].passable = false
+    print(#content, height, width, height * width)
+
+    local tileset = {
+      ground    = love.graphics.newImage 'resources/tiles/floor-wood-01.png',
+      wall      = love.graphics.newImage 'resources/tiles/wall-brickwood-00.png',
+      --wall_head = love.graphics.newImage 'resources/tiles/wall-brickwood-01.png',
+    }
+    local tileset_head = {
+      
+    }
+
+    local map = map:new { width = width, height = height }
     for j = 1,map.height do
       for i = 1,map.width do
-        if map.matrix[j][i] then
-          if map.matrix[j][i].passable then
-            map.matrix[j][i].image = tileset.ground
-          else
-            map.matrix[j][i].image = tileset.wall
-          end
+        local start = (j - 1) * width + i
+        local t = types[content:sub(start, start)]
+        if not t or t.type ~= 'tile' then
+          t = types['.']
         end
+
+        map.matrix[j][i].passable = not t.blocks
+        map.matrix[j][i].image = tileset[t.name]
       end
     end
 
