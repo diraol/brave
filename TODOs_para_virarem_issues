@@ -1,0 +1,26 @@
+ - comportamento inimigos
+ - bordas dos tiles
+ - seleção de habilidade/item/ataque
+ - hud que mostra possíveis ataques/ações
+ - itens: poção de cura
+ - botão "A" = menu de ações
+ -- menu de ações = lista de ações com um número para cada ação
+ - fórmulas no combate
+ - artes:
+ -- inimigos
+ -- armas
+ --- curto alcance
+ --- longo alcance
+ -- poções
+ -- mobília
+ - hud
+ - narrativa
+ - escrever o gdd
+
+
+==========================================================
+ - armadilhas
+ - efeitos em geral
+ - introdução de história (labirinto)
+ - hud mais completo (estatísticas e animações)
+ - 
