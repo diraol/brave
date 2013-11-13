@@ -15,9 +15,9 @@ module ('dungeon', package.seeall) do
 
     -- Pressing the 'attack' button
     if button == "a" then
-      self.inputstate.attacking = not self.inputstate.attacking
-      if not self.inputstate.attacking then
-        self.inputstate.confirm_attack = nil
+      self.state.attacking = not self.state.attacking
+      if not self.state.attacking then
+        self.state.confirm_attack = nil
       end
 
     -- Logic for multiple buttons. Mostly arrow keys and enter.
@@ -25,29 +25,29 @@ module ('dungeon', package.seeall) do
       local dir = button_to_direction[button]
 
       -- Confirming the attack direction.
-      if self.inputstate.confirm_attack then
+      if self.state.confirm_attack then
 
         -- Same direction or enter
-        if dir == self.inputstate.confirm_attack or button == 'return' then
-          run_action('attack', self.inputstate.confirm_attack)
-          self.inputstate.confirm_attack = nil
-          self.inputstate.attacking = false
+        if dir == self.state.confirm_attack or button == 'return' then
+          run_action('attack', self.state.confirm_attack)
+          self.state.confirm_attack = nil
+          self.state.attacking = false
 
         -- Chose another valid direction
         elseif dir then
-          self.inputstate.confirm_attack = dir
+          self.state.confirm_attack = dir
 
         -- Cancel attack
         else
-          self.inputstate.confirm_attack = nil
-          self.inputstate.attacking = false
+          self.state.confirm_attack = nil
+          self.state.attacking = false
         end
 
       -- An arrow key.
       elseif dir then
         -- Attack menu up, means selecting a direction to attack.
-        if self.inputstate.attacking then
-          self.inputstate.confirm_attack = dir
+        if self.state.attacking then
+          self.state.confirm_attack = dir
 
         -- If no menu, means movement.
         else
@@ -57,8 +57,8 @@ module ('dungeon', package.seeall) do
 
       -- If unregistered button, cancel all menus.
       else
-        self.inputstate.attacking = nil
-        self.inputstate.confirm_attack = nil
+        self.state.attacking = nil
+        self.state.confirm_attack = nil
       end
     end
   end

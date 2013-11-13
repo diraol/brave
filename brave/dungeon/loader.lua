@@ -48,6 +48,7 @@ module ('dungeon', package.seeall) do
         local tile = (data.type == 'tile') and data or types['.']
         map.matrix[j][i].passable = not tile.blocks
         map.matrix[j][i].image = tileset[tile.name]
+        map.matrix[j][i].set   = tileset[tile.name]
 
         -- Coloca a entidade na cena
         if data.type == 'entity' then
@@ -57,11 +58,11 @@ module ('dungeon', package.seeall) do
       end
     end
 
-    dungeonscene.inputstate.selection_image = love.graphics.newImage 'resources/cursor.png'
+    dungeonscene.state.selection_image = love.graphics.newImage 'resources/cursor.png'
     dungeonscene.input_pressed = player_input_handler
 
     local hero = builder.hero()
-    dungeonscene.inputstate.hero = hero
+    dungeonscene.state.hero = hero
     dungeonscene.timecontroller:add_entity(hero, vec2:new{1, 1})
 
     message.send [[main]] {'change_scene', dungeonscene }

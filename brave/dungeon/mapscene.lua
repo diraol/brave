@@ -19,7 +19,7 @@ module ('dungeon', package.seeall) do
 
   function mapscene:__init()
     self.timecontroller = timecontroller:new{map = self.map}
-    self.inputstate = {}
+    self.state = {}
     self.camerapos = vec2:new{0, 0}
   end
 
@@ -28,9 +28,9 @@ module ('dungeon', package.seeall) do
   end
 
   function mapscene:update(dt)
-    if self.inputstate.hero then
-      self.camerapos.x = (self.inputstate.hero.position.x - 1) / (self.map.width - 1)
-      self.camerapos.y = (self.inputstate.hero.position.y - 1) / (self.map.height - 1)
+    if self.state.hero then
+      self.camerapos.x = (self.state.hero.position.x - 1) / (self.map.width - 1)
+      self.camerapos.y = (self.state.hero.position.y - 1) / (self.map.height - 1)
     end
   end
 
@@ -39,6 +39,6 @@ module ('dungeon', package.seeall) do
     graphics.translate(-TILE_SIZE + BORDER_X_LEFT, -TILE_SIZE + BORDER_Y_TOP)
     graphics.translate(-self.camerapos.x * ((self.map.visible_size.x + BORDER_X_LEFT + BORDER_X_RIGHT) - graphics:get_screensize().x / 2),
                        -self.camerapos.y * ((self.map.visible_size.y + BORDER_Y_TOP  + BORDER_Y_BOTTOM) - graphics:get_screensize().y / 2))
-    self.map:draw(graphics, self.inputstate)
+    self.map:draw(graphics, self)
   end
 end
