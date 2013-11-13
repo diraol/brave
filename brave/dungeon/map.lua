@@ -28,15 +28,18 @@ module ('dungeon', package.seeall) do
     }
   end
 
-  function map:get_tile(pos)
-    return self.matrix[pos.y] and self.matrix[pos.y][pos.x]
+  function map:get_tile(pos_or_x, y)
+    local x = y and pos_or_x or pos_or_x.x
+    y = y or pos_or_x.y
+
+    return self.matrix[y] and self.matrix[y][x]
   end
 
-  function map:draw(graphics, state)
+  function map:draw(graphics, scene)
     for j = 1,self.height do
       for i = 1,self.width do
         if self.matrix[j][i] then
-          self.matrix[j][i]:draw(graphics, i, j, state)
+          self.matrix[j][i]:draw(graphics, i, j, scene)
         end
       end
     end

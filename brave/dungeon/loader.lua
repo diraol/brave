@@ -30,8 +30,8 @@ module ('dungeon', package.seeall) do
     assert(#content == (height * width), "Content size (" .. #content .. ") isn't " .. width .. " x " .. height)
 
     local tileset = {
-      ground    = love.graphics.newImage 'resources/tiles/floor-wood-01.png',
-      wall      = love.graphics.newImage 'resources/tiles/wall-brickwood-00.png',
+      ground    = { simple = love.graphics.newImage 'resources/tiles/floor-wood-01.png' },
+      wall      = { grid = love.graphics.newImage 'resources/tiles/wall-brickwood-00-alltops.png' },
       --wall_head = love.graphics.newImage 'resources/tiles/wall-brickwood-01.png',
     }
 
@@ -47,7 +47,6 @@ module ('dungeon', package.seeall) do
         -- Use um chão padrão para todo os objetos/entidades
         local tile = (data.type == 'tile') and data or types['.']
         map.matrix[j][i].passable = not tile.blocks
-        map.matrix[j][i].image = tileset[tile.name]
         map.matrix[j][i].set   = tileset[tile.name]
 
         -- Coloca a entidade na cena
@@ -63,6 +62,49 @@ module ('dungeon', package.seeall) do
 
     local hero = builder.hero()
     dungeonscene.state.hero = hero
+
+    --[[
+      right = 1
+      left  = 2
+      up    = 4
+      down  = 8
+
+      0 = all     = (0, 0)
+      1 = no-R    = (1, 0)
+      2 = no- L   = (3, 0)
+      3 = no-RL   = (2, 0)
+      4 = no-  U  = (0, 3)
+      5 = no-R U  = (1, 3)
+      6 = no- LU  = (3, 3)
+      7 = no-RLU  = (2, 3)
+      8 = no-   D = (0, 1)
+      9 = no-R  D = (1, 1)
+      10= no- L D = (3, 1)
+      11= no-RL D = (2, 1)
+      12= no-  UD = (0, 2)
+      13= no-R UD = (1, 2)
+      14= no- LUD = (3, 2)
+      15= no-RLUD = (2, 2)
+    ]]
+    dungeonscene.state.tile_quads = {
+      [ 0] = love.graphics.newQuad(0*48, 0*48, 48, 48, 48*4, 48*4),
+      [ 1] = love.graphics.newQuad(1*48, 0*48, 48, 48, 48*4, 48*4),
+      [ 2] = love.graphics.newQuad(3*48, 0*48, 48, 48, 48*4, 48*4),
+      [ 3] = love.graphics.newQuad(2*48, 0*48, 48, 48, 48*4, 48*4),
+      [ 4] = love.graphics.newQuad(0*48, 3*48, 48, 48, 48*4, 48*4),
+      [ 5] = love.graphics.newQuad(1*48, 3*48, 48, 48, 48*4, 48*4),
+      [ 6] = love.graphics.newQuad(3*48, 3*48, 48, 48, 48*4, 48*4),
+      [ 7] = love.graphics.newQuad(2*48, 3*48, 48, 48, 48*4, 48*4),
+      [ 8] = love.graphics.newQuad(0*48, 1*48, 48, 48, 48*4, 48*4),
+      [ 9] = love.graphics.newQuad(1*48, 1*48, 48, 48, 48*4, 48*4),
+      [10] = love.graphics.newQuad(3*48, 1*48, 48, 48, 48*4, 48*4),
+      [11] = love.graphics.newQuad(2*48, 1*48, 48, 48, 48*4, 48*4),
+      [12] = love.graphics.newQuad(0*48, 2*48, 48, 48, 48*4, 48*4),
+      [13] = love.graphics.newQuad(1*48, 2*48, 48, 48, 48*4, 48*4),
+      [14] = love.graphics.newQuad(3*48, 2*48, 48, 48, 48*4, 48*4),
+      [15] = love.graphics.newQuad(2*48, 2*48, 48, 48, 48*4, 48*4),
+    }
+
     dungeonscene.timecontroller:add_entity(hero, vec2:new{1, 1})
 
     message.send [[main]] {'change_scene', dungeonscene }

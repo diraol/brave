@@ -37,20 +37,30 @@ module ('dungeon', package.seeall) do
     self.entity = nil
   end
   
-  function tile:draw(graphics, x, y, state)
-    if self.passable then
-      if state.attacking and state.hero.weapon:can_attack(vec2:new{x, y}) then
-        graphics.setColor(230, 127, 127)
-      else
-        graphics.setColor(230, 230, 230)
-      end
+  function tile:draw(graphics, x, y, scene)
+    local state = scene.state
+    if state.attacking and state.hero.weapon:can_attack(vec2:new{x, y}) then
+      graphics.setColor(230, 127, 127)
     else
-      graphics.setColor(127, 127, 127)
+      graphics.setColor(255, 255, 255)
     end
-    if self.image then
-      local draw_x = x * TILE_SIZE + (TILE_SIZE - self.image:getWidth()) * 0.5
-      local draw_y = y * TILE_SIZE + (TILE_SIZE - self.image:getHeight())
-      graphics.draw(self.image, draw_x, draw_y)
+    if self.set then
+      if self.set.simple then
+        graphics.draw(self.set.simple, x * TILE_SIZE, y * TILE_SIZE)
+      else
+        local right = scene.map:get_tile(x + 1, y)
+        local left  = scene.map:get_tile(x - 1, y)
+        local up    = scene.map:get_tile(x, y - 1)
+        local down  = scene.map:get_tile(x, y + 1)
+
+        local has_right = right and right.set == self.set and 1 or 0
+        local has_left  = left  and left.set  == self.set and 2 or 0
+        local has_up    = up    and up.set    == self.set and 4 or 0
+        local has_down  = down  and down.set   == self.set and 8 or 0
+
+        local sum = has_right + has_left + has_up + has_down
+        graphics.drawq(self.set.grid, state.tile_quads[sum], x * TILE_SIZE, y * TILE_SIZE)
+      end
     end
     if self.entity then
       self.entity:draw(graphics)
