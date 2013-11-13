@@ -45,9 +45,7 @@ module ('dungeon', package.seeall) do
       graphics.setColor(255, 255, 255)
     end
     if self.set then
-      if self.set.simple then
-        graphics.draw(self.set.simple, x * TILE_SIZE, y * TILE_SIZE)
-      else
+      if self.set.grid then
         local right = scene.map:get_tile(x + 1, y)
         local left  = scene.map:get_tile(x - 1, y)
         local up    = scene.map:get_tile(x, y - 1)
@@ -59,7 +57,15 @@ module ('dungeon', package.seeall) do
         local has_down  = down  and down.set   == self.set and 8 or 0
 
         local sum = has_right + has_left + has_up + has_down
-        graphics.drawq(self.set.grid, state.tile_quads[sum], x * TILE_SIZE, y * TILE_SIZE)
+
+        local draw_x, draw_y = x * TILE_SIZE, y * TILE_SIZE
+        if self.set.grid_offset then
+          draw_x, draw_y = draw_x + self.set.grid_offset.x, draw_y + self.set.grid_offset.y
+        end
+        graphics.drawq(self.set.grid, state.tile_quads[sum], draw_x, draw_y)
+      end
+      if self.set.simple then
+        graphics.draw(self.set.simple, x * TILE_SIZE, y * TILE_SIZE)
       end
     end
     if self.entity then

@@ -30,8 +30,14 @@ module ('dungeon', package.seeall) do
     assert(#content == (height * width), "Content size (" .. #content .. ") isn't " .. width .. " x " .. height)
 
     local tileset = {
-      ground    = { simple = love.graphics.newImage 'resources/tiles/floor-wood-01.png' },
-      wall      = { grid = love.graphics.newImage 'resources/tiles/wall-brickwood-00-alltops.png' },
+      ground = {
+        simple = love.graphics.newImage 'resources/tiles/floor-wood-01.png',
+      },
+      wall = {
+        simple = love.graphics.newImage 'resources/tiles/wall-brickwood-00-bottom.png',
+        grid_offset = vec2:new{0, -48},
+        grid = love.graphics.newImage 'resources/tiles/wall-brickwood-00-alltops.png',
+      },
       --wall_head = love.graphics.newImage 'resources/tiles/wall-brickwood-01.png',
     }
 
