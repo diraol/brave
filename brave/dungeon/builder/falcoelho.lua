@@ -1,4 +1,5 @@
 require 'dungeon.entity'
+require 'base.message'
 require 'base.vec2'
 
 function random_side()
@@ -23,22 +24,41 @@ function random_side()
 
 end
 
+function hero_distance(pos, range)
+  local local_scene = message.send [[main]] {'current_scene'}
+  hero_pos = local_scene.inputstate.hero.position
+  return math.abs((hero_pos - pos):norm1()) <= range
+end
+
 return function(args)
   
   local falcoelho = dungeon.entity:new {
     image = love.graphics.newImage 'resources/entities/falcoelho.png',
     scale = 0.5,
-    p_attack = 0.3, --attack probability
+    p_attack_ratio = 0.9, --attack probability
+    p_attack_distance = 1, -- distance falcoelho can attack
+    damage = 5,
+    p_act = .2,
   }
 
   function falcoelho:playturn()
-    if math.random() < 0.75 then return end
+    if math.random() < self.p_act then return end
 
     local wtd = math.random() -- What to do?
 
-    if wtd < self.p_attack then
-      --do attack!
-      return      
+    if wtd < self.p_attack_ratio then
+      if hero_distance(self.position, self.p_attack_distance) then
+        local local_scene = message.send [[main]] {'current_scene'}
+        hero_pos = local_scene.inputstate.hero.position
+        local target_tile = self.map:get_tile(hero_pos)
+        if target_tile.entity then
+          target_tile.entity:take_damage(self.damage)
+        else
+          return
+        end
+      else
+        return
+      end
     else
       --do move to somewhere!
       local next_pos = self.position:clone()

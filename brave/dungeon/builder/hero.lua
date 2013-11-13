@@ -40,6 +40,10 @@ module ('dungeon.builder', package.seeall) do
 
       end
     end
+    function hero:die()
+      --self.__super.die(self)
+      love.event.push("quit")
+    end
     return hero
   end
 

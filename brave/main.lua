@@ -24,6 +24,10 @@ function main_message_handler.change_scene(newscene, stack)
   current_scene:focus()
 end
 
+function main_message_handler.current_scene()
+  return current_scene
+end
+
 function love.load()
   graphics = {}
   setmetatable(graphics, { __index = love.graphics })
