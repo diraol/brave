@@ -11,10 +11,6 @@ module ('dungeon', package.seeall) do
     bodies = nil,
   }
 
-  function distance(v1, v2)
-    return (v1 - v2):norm1()
-  end
-
   function tile:__init()
     self.bodies = self.bodies or {}
     self.passable = self.passable or true
@@ -73,7 +69,7 @@ module ('dungeon', package.seeall) do
       self.entity:draw(graphics)
     end    
     if state.selection_image and state.confirm_attack and
-      distance(state.hero.position + state.confirm_attack, vec2:new{x, y}) == 0 then
+      vec2:new{x, y}:distance(state.hero.position + state.confirm_attack) == 0 then
         graphics.setColor(255, 0, 0)
         graphics.draw(state.selection_image, x * TILE_SIZE, y * TILE_SIZE)
     end

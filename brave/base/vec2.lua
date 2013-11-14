@@ -85,3 +85,7 @@ end
 function vec2:normalized ()
   return self/self:length()
 end
+
+function vec2:distance(v2)
+  return (self - v2):norm1()
+end
