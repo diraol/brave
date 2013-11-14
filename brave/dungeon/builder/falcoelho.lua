@@ -8,7 +8,7 @@ return function(args)
   local falcoelho = dungeon.entity:new {
     image = love.graphics.newImage 'resources/entities/falcoelho.png',
     scale = 0.5,
-    p_attack_ratio = 0.9, --attack probability
+    p_attack_ratio = 0.1, --attack probability
     p_attack_distance = 1, -- distance falcoelho can attack
     damage = 5,
     p_act = .2,

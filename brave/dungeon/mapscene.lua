@@ -32,6 +32,7 @@ module ('dungeon', package.seeall) do
       self.camerapos.x = (self.state.hero.position.x - 1) / (self.map.width - 1)
       self.camerapos.y = (self.state.hero.position.y - 1) / (self.map.height - 1)
     end
+    self.timecontroller:continue(dt)
   end
 
   function mapscene:draw(graphics)

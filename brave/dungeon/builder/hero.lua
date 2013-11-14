@@ -26,6 +26,7 @@ module ('dungeon.builder', package.seeall) do
           self.map:get_tile(self.position):remove_entity()
           self.map:get_tile(next_pos):add_entity(self)
           self.position = next_pos
+          return 0.1
         end
 
       elseif action == 'attack' then
@@ -33,6 +34,7 @@ module ('dungeon.builder', package.seeall) do
         local target_tile = self.map:get_tile(target_pos)
         if target_tile and target_tile.entity then
           target_tile.entity:take_damage(self.weapon.damage)
+          return 0.1
         end
 
       else

@@ -48,9 +48,7 @@ function enemy_dumb_turn(self)
     end
   else
     --do move to somewhere!
-    local next_pos = self.position:clone()
-    next_post = next_pos + random_side()
-
+    local next_pos = self.position:clone() + random_side()
     local next_tile = self.map:get_tile(next_pos)
     if next_tile and next_tile:available() then
       self.map:get_tile(self.position):remove_entity()

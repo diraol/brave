@@ -9,8 +9,9 @@ module ('dungeon', package.seeall) do
   }
 
   function player_input_handler(self, button)
+    if not self.timecontroller:accepting_input() then return end
     function run_action(...)
-      assert(coroutine.resume(self.timecontroller.routine, ...))
+      self.timecontroller:send_input(...)
     end
 
     -- Pressing the 'attack' button
