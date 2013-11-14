@@ -26,7 +26,7 @@ end
 
 function hero_distance(pos, range)
   local local_scene = message.send [[main]] {'current_scene'}
-  hero_pos = local_scene.inputstate.hero.position
+  hero_pos = local_scene.state.hero.position
   return math.abs((hero_pos - pos):norm1()) <= range
 end
 
@@ -41,7 +41,7 @@ return function(args)
     p_act = .2,
   }
 
-  pandarila.weapon
+  --pandarila.weapon
 
   function pandarila:playturn()
     if math.random() < self.p_act then return end
@@ -51,7 +51,7 @@ return function(args)
     if wtd < self.p_attack_ratio then
       if hero_distance(self.position, self.p_attack_distance) then
         local local_scene = message.send [[main]] {'current_scene'}
-        hero_pos = local_scene.inputstate.hero.position
+        hero_pos = local_scene.state.hero.position
         local target_tile = self.map:get_tile(hero_pos)
         if target_tile.entity then
           target_tile.entity:take_damage(self.damage)
