@@ -34,7 +34,7 @@ return function(args)
   
   local crocochorro = dungeon.entity:new {
     image = love.graphics.newImage 'resources/entities/crocochorro.png',
-    scale = 0.5,
+    scale = 0.8,
     p_attack_ratio = 0.9, --attack probability
     p_attack_distance = 1, -- distance crocochorro can attack
     damage = 5,
