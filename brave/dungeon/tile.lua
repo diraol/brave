@@ -39,12 +39,8 @@ module ('dungeon', package.seeall) do
   
   function tile:draw(graphics, x, y, scene)
     local state = scene.state
-    if state.attacking and state.hero.weapon:can_attack(vec2:new{x, y}) then
-      graphics.setColor(230, 127, 127)
-    else
-      graphics.setColor(255, 255, 255)
-    end
     if self.set then
+      graphics.setColor(255, 255, 255)
       if self.set.grid then
         local right = scene.map:get_tile(x + 1, y)
         local left  = scene.map:get_tile(x - 1, y)
@@ -68,9 +64,14 @@ module ('dungeon', package.seeall) do
         graphics.draw(self.set.simple, x * TILE_SIZE, y * TILE_SIZE)
       end
     end
-    if self.entity then
-      self.entity:draw(graphics)
+    if state.attacking and state.hero.weapon:can_attack(vec2:new{x, y}) then
+      graphics.setColor(230, 0, 0, 127)
+      graphics.rectangle('fill', x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
     end
+    if self.entity then
+      graphics.setColor(255, 255, 255)
+      self.entity:draw(graphics)
+    end    
     if state.selection_image and state.confirm_attack and
       distance(state.hero.position + state.confirm_attack, vec2:new{x, y}) == 0 then
         graphics.setColor(255, 0, 0)
