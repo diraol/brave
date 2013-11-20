@@ -32,7 +32,8 @@ function enemy_dumb_turn(self)
 
   local wtd = math.random() -- What to do?
 
-  if wtd < self.weapons.current.p_attack_ratio then
+  if wtd < self.weapons.current.p_attack_ratio * self.hp /self.maxhp then
+    -- when the enemy has been hit it get's more difficult to him to attack
     -- try to attack
     if hero_distance(self.position, self.weapons.current.min_range, self.weapons.current.max_range) then
       -- hero on attack range
