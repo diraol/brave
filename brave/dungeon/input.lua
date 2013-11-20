@@ -29,12 +29,14 @@ module ('dungeon', package.seeall) do
         self.state.hero.weapons.current = self.state.hero.weapons[weapon_slot]
       end
 
+    elseif button == 'tab' then
+
     -- Logic for multiple buttons. Mostly arrow keys and enter.
     else
       local dir = button_to_direction[button]
 
       -- Confirm attack
-      if button == 'return' then
+      if button == 'return' and self.state.attacking then
         run_action('attack', self.state.attack_location)
 
         self.state.attack_location = nil
