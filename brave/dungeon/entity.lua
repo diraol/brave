@@ -68,7 +68,7 @@ module ('dungeon', package.seeall) do
             local green = math.min(255, 510 - diff * 255)
             graphics.setColor(red, green, 0)
           end
-          graphics.draw(self.lifebar.life.gray, draw_pos_lifebar.x + 12 + i * 11, draw_pos_lifebar.y + 7)
+          graphics.draw(self.lifebar.bar_image, draw_pos_lifebar.x + 12 + i * 11, draw_pos_lifebar.y + 7)
         end
 
         graphics.pop()

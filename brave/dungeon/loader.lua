@@ -32,12 +32,7 @@ module ('dungeon', package.seeall) do
     local lifebar_sprites = {
       background = love.graphics.newImage 'resources/hud/hud_topo_fundo_frente.png',
 
-      life = {
-        red    = love.graphics.newImage 'resources/hud/pt_vida_VERMELHA.png',
-        yellow = love.graphics.newImage 'resources/hud/pt_vida_AMARELA.png',
-        green  = love.graphics.newImage 'resources/hud/pt_vida_VERDE.png',
-        gray   = love.graphics.newImage 'resources/hud/pt_vida_CINZA.png',
-      },
+      bar_image  = love.graphics.newImage 'resources/hud/pt_vida_CINZA.png',
     }
 
     local tileset = {
