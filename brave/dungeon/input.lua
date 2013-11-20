@@ -18,7 +18,9 @@ module ('dungeon', package.seeall) do
     if button == "a" then
       self.state.attacking = not self.state.attacking
       if not self.state.attacking then
-        self.state.confirm_attack = nil
+        self.state.attack_location = nil
+      else
+        self.state.attack_location = self.state.hero.position:clone()
       end
 
     elseif #button == 1 and ('1' <= button and button <= '7') then
@@ -31,41 +33,24 @@ module ('dungeon', package.seeall) do
     else
       local dir = button_to_direction[button]
 
-      -- Confirming the attack direction.
-      if self.state.confirm_attack then
+      -- Confirm attack
+      if button == 'return' then
+        run_action('attack', self.state.attack_location)
 
-        -- Same direction or enter
-        if dir == self.state.confirm_attack or button == 'return' then
-          run_action('attack', self.state.confirm_attack)
-          self.state.confirm_attack = nil
-          self.state.attacking = false
+        self.state.attack_location = nil
+        self.state.attacking = false
 
-        -- Chose another valid direction
-        elseif dir then
-          self.state.confirm_attack = dir
+      -- Cancel attack
+      elseif not dir then
+        self.state.attack_location = nil
+        self.state.attacking = false
 
-        -- Cancel attack
-        else
-          self.state.confirm_attack = nil
-          self.state.attacking = false
-        end
+      -- If no menu, means movement.
+      elseif not self.state.attacking then
+        run_action('move', dir)
 
-      -- An arrow key.
-      elseif dir then
-        -- Attack menu up, means selecting a direction to attack.
-        if self.state.attacking then
-          self.state.confirm_attack = dir
-
-        -- If no menu, means movement.
-        else
-          run_action('move', button_to_direction[button])
-
-        end
-
-      -- If unregistered button, cancel all menus.
       else
-        self.state.attacking = nil
-        self.state.confirm_attack = nil
+        self.state.attack_location = self.state.attack_location + dir
       end
     end
   end

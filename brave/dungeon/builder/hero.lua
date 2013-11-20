@@ -53,7 +53,11 @@ module ('dungeon.builder', package.seeall) do
         end
 
       elseif action == 'attack' then
-        local target_pos = self.position + direction
+        local target_pos = direction
+        if not self:can_attack(target_pos) then
+          return
+        end
+
         local target_tile = self.map:get_tile(target_pos)
         if target_tile and target_tile.entity then
           target_tile.entity:take_damage(self.weapons.current.damage)

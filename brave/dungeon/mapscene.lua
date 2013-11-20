@@ -59,10 +59,9 @@ module ('dungeon', package.seeall) do
     self.map:draw(graphics, self)
 
 
-    if self.state.selection_image and self.state.confirm_attack then
-      local selection_pos = self.state.hero.position + self.state.confirm_attack
+    if self.state.selection_image and self.state.attack_location then
       graphics.setColor(255, 0, 0)
-      graphics.draw(self.state.selection_image, selection_pos.x * TILE_SIZE, selection_pos.y * TILE_SIZE)
+      graphics.draw(self.state.selection_image, self.state.attack_location.x * TILE_SIZE, self.state.attack_location.y * TILE_SIZE)
     end
 
     graphics.pop()
