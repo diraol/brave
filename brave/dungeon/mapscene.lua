@@ -21,6 +21,11 @@ module ('dungeon', package.seeall) do
     self.timecontroller = timecontroller:new{map = self.map}
     self.state = {}
     self.camerapos = vec2:new{0, 0}
+
+    self.hud = {
+      background = love.graphics.newImage 'resources/hud/hud_lateral_fundo.png',
+      foreground = love.graphics.newImage 'resources/hud/hud_lateral_frente.png',
+    }
   end
 
   function mapscene:focus()
@@ -36,10 +41,16 @@ module ('dungeon', package.seeall) do
   end
 
   function mapscene:draw(graphics)
+
+    graphics.push()
     graphics.scale(2.0, 2.0)
     graphics.translate(-TILE_SIZE + BORDER_X_LEFT, -TILE_SIZE + BORDER_Y_TOP)
     graphics.translate(-self.camerapos.x * ((self.map.visible_size.x + BORDER_X_LEFT + BORDER_X_RIGHT) - graphics:get_screensize().x / 2),
                        -self.camerapos.y * ((self.map.visible_size.y + BORDER_Y_TOP  + BORDER_Y_BOTTOM) - graphics:get_screensize().y / 2))
     self.map:draw(graphics, self)
+    graphics.pop()
+
+    graphics.draw(self.hud.background, graphics:get_screensize().x - self.hud.background:getWidth(), 0)
+    graphics.draw(self.hud.foreground, graphics:get_screensize().x - self.hud.background:getWidth(), 0)
   end
 end
