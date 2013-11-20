@@ -24,9 +24,10 @@ module ('dungeon', package.seeall) do
       state.attacking = not state.attacking
       if state.attacking then
 
-        state.attack_location = hero.position:clone()
         if state.last_attack and state.last_attack.weapon == hero.weapons.current then
-          state.attack_location = state.attack_location + state.last_attack.angle
+          state.attack_location = state.last_attack.location
+        else
+          state.attack_location = hero.position:clone()
         end
       else
         state.attack_location = nil
@@ -48,8 +49,8 @@ module ('dungeon', package.seeall) do
       if button == 'return' and state.attacking then
         if hero:can_attack(state.attack_location) then
           state.last_attack = { 
-            weapon = hero.weapons.current,
-            angle  = state.attack_location - hero.position,
+            weapon    = hero.weapons.current,
+            location  = state.attack_location,
           }
 
           run_action('attack', state.attack_location)
