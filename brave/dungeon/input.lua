@@ -1,6 +1,8 @@
 
 module ('dungeon', package.seeall) do
 
+  require 'base.sound'
+
   local button_to_direction = {
     right = vec2:new{ 1, 0},
     left  = vec2:new{-1, 0},
@@ -44,15 +46,19 @@ module ('dungeon', package.seeall) do
 
       -- Confirm attack
       if button == 'return' and state.attacking then
-        state.last_attack = { 
-          weapon = hero.weapons.current,
-          angle  = state.attack_location - hero.position,
-        }
+        if hero:can_attack(state.attack_location) then
+          state.last_attack = { 
+            weapon = hero.weapons.current,
+            angle  = state.attack_location - hero.position,
+          }
 
-        run_action('attack', state.attack_location)
+          run_action('attack', state.attack_location)
 
-        state.attack_location = nil
-        state.attacking = false
+          state.attack_location = nil
+          state.attacking = false
+        else
+          sound.effect 'menu_error'
+        end
 
       -- Cancel attack
       elseif not dir then

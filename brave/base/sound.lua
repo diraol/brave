@@ -5,7 +5,7 @@ module ('sound', package.seeall) do
   local sounds = {}
 
   function sound.load (audio)
-    --sounds.hit    = audio.newSource('data/sound/hit10.mp3.ogg', 'static')
+    sounds.menu_error    = audio.newSource('resources/sfx/negative_2.ogg', 'static')
   end
 
   function sound.effect (id, pos)
