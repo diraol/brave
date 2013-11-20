@@ -29,6 +29,16 @@ module ('dungeon', package.seeall) do
     local content, width, height = load_level_file(level_name)
     assert(#content == (height * width), "Content size (" .. #content .. ") isn't " .. width .. " x " .. height)
 
+    local lifebar_sprites = {
+      background = love.graphics.newImage 'resources/hud/hud_topo_fundo_frente.png',
+
+      life = {
+        red    = love.graphics.newImage 'resources/hud/pt_vida_VERMELHA.png',
+        yellow = love.graphics.newImage 'resources/hud/pt_vida_AMARELA.png',
+        green  = love.graphics.newImage 'resources/hud/pt_vida_VERDE.png',
+      },
+    }
+
     local tileset = {
       ground = {
         simple = love.graphics.newImage 'resources/tiles/floor-wood-01.png',
@@ -58,7 +68,9 @@ module ('dungeon', package.seeall) do
         -- Coloca a entidade na cena
         if data.type == 'entity' then
           local build = love.filesystem.load('dungeon/builder/' .. data.name .. '.lua')()
-          dungeonscene.timecontroller:add_entity(build(), vec2:new{i, j})
+          local ent = build()
+          ent.lifebar = lifebar_sprites
+          dungeonscene.timecontroller:add_entity(ent, vec2:new{i, j})
         end
       end
     end
@@ -67,6 +79,7 @@ module ('dungeon', package.seeall) do
     dungeonscene.input_pressed = player_input_handler
 
     local hero = builder.hero()
+    hero.lifebar = lifebar_sprites
     dungeonscene.state.hero = hero
 
     --[[

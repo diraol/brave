@@ -71,6 +71,7 @@ module ('dungeon', package.seeall) do
       end
 
       if self.delay > 0.0 then 
+        self.delay = self.delay * 0.1 -- DEBUG PQ DEMORA D+
         self.waiting_delay = true
         coroutine.yield()
         self.waiting_delay = false
