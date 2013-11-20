@@ -89,3 +89,7 @@ end
 function vec2:distance(v2)
   return (self - v2):norm1()
 end
+
+function vec2:tostring()
+  return tostring(self[1]) .. ", " .. tostring(self[2])
+end

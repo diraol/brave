@@ -20,6 +20,11 @@ module ('dungeon', package.seeall) do
   function mapscene:__init()
     self.timecontroller = timecontroller:new{map = self.map}
     self.state = {}
+    function self.state:is_highlighted(pos)
+      if not self.attacking then return false end
+      return self.hero.weapon:can_attack(pos)
+    end
+
     self.camerapos = vec2:new{0, 0}
 
     self.hud = {
@@ -52,8 +57,17 @@ module ('dungeon', package.seeall) do
     graphics.translate(-self.camerapos.x * ((self.map.visible_size.x + BORDER_X_LEFT + BORDER_X_RIGHT) - graphics:get_screensize().x / 2),
                        -self.camerapos.y * ((self.map.visible_size.y + BORDER_Y_TOP  + BORDER_Y_BOTTOM) - graphics:get_screensize().y / 2))
     self.map:draw(graphics, self)
+
+
+    if self.state.selection_image and self.state.confirm_attack then
+      local selection_pos = self.state.hero.position + self.state.confirm_attack
+      graphics.setColor(255, 0, 0)
+      graphics.draw(self.state.selection_image, selection_pos.x * TILE_SIZE, selection_pos.y * TILE_SIZE)
+    end
+
     graphics.pop()
 
+    graphics.setColor(255, 255, 255)
     --graphics.draw(self.hud.background, graphics:get_screensize().x - self.hud.background:getWidth(), 0)
     local off_x = self.hud.boxes.empty_on:getWidth() + 20
     for i=1,7 do

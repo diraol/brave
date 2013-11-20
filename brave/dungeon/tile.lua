@@ -60,7 +60,7 @@ module ('dungeon', package.seeall) do
         graphics.draw(self.set.simple, x * TILE_SIZE, y * TILE_SIZE)
       end
     end
-    if state.attacking and state.hero:can_attack(vec2:new{x, y}) then
+    if state:is_highlighted(vec2:new{x, y}) then
       graphics.setColor(230, 0, 0, 127)
       graphics.rectangle('fill', x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
     end
@@ -68,10 +68,5 @@ module ('dungeon', package.seeall) do
       graphics.setColor(255, 255, 255)
       self.entity:draw(graphics)
     end    
-    if state.selection_image and state.confirm_attack and
-      vec2:new{x, y}:distance(state.hero.position + state.confirm_attack) == 0 then
-        graphics.setColor(255, 0, 0)
-        graphics.draw(state.selection_image, x * TILE_SIZE, y * TILE_SIZE)
-    end
   end
 end
