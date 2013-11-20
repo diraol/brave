@@ -14,45 +14,57 @@ module ('dungeon', package.seeall) do
       self.timecontroller:send_input(...)
     end
 
+    local state = self.state
+    local hero  = state.hero
+
     -- Pressing the 'attack' button
     if button == "a" then
-      self.state.attacking = not self.state.attacking
-      if not self.state.attacking then
-        self.state.attack_location = nil
+      state.attacking = not state.attacking
+      if state.attacking then
+
+        state.attack_location = hero.position:clone()
+        if state.last_attack and state.last_attack.weapon == hero.weapons.current then
+          state.attack_location = state.attack_location + state.last_attack.angle
+        end
       else
-        self.state.attack_location = self.state.hero.position:clone()
+        state.attack_location = nil
       end
 
     elseif #button == 1 and ('1' <= button and button <= '7') then
       local weapon_slot = tonumber(button)
-      if weapon_slot and self.state.hero.weapons[weapon_slot] then
-        self.state.hero.weapons.current = self.state.hero.weapons[weapon_slot]
+      if weapon_slot and hero.weapons[weapon_slot] then
+        hero.weapons.current = hero.weapons[weapon_slot]
       end
 
-    elseif button == 'tab' then
+    elseif button == 'tab' and state.attacking then
 
     -- Logic for multiple buttons. Mostly arrow keys and enter.
     else
       local dir = button_to_direction[button]
 
       -- Confirm attack
-      if button == 'return' and self.state.attacking then
-        run_action('attack', self.state.attack_location)
+      if button == 'return' and state.attacking then
+        state.last_attack = { 
+          weapon = hero.weapons.current,
+          angle  = state.attack_location - hero.position,
+        }
 
-        self.state.attack_location = nil
-        self.state.attacking = false
+        run_action('attack', state.attack_location)
+
+        state.attack_location = nil
+        state.attacking = false
 
       -- Cancel attack
       elseif not dir then
-        self.state.attack_location = nil
-        self.state.attacking = false
+        state.attack_location = nil
+        state.attacking = false
 
       -- If no menu, means movement.
-      elseif not self.state.attacking then
+      elseif not state.attacking then
         run_action('move', dir)
 
       else
-        self.state.attack_location = self.state.attack_location + dir
+        state.attack_location = state.attack_location + dir
       end
     end
   end
