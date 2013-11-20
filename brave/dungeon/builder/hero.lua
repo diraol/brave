@@ -25,6 +25,12 @@ module ('dungeon.builder', package.seeall) do
       p_attack_ratio = 0.95, --success attack probability
     }
     hero.weapons.current = hero.weapons.punch
+
+    hero.actions = {
+      { icon = love.graphics.newImage 'resources/hud/rapier-00.png' },
+      { icon = love.graphics.newImage 'resources/hud/bow-00.png' },
+    }
+
     function hero:playturn()
       local action, direction = coroutine.yield()
 

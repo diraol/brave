@@ -22,7 +22,10 @@ module ('dungeon', package.seeall) do
       end
 
     elseif #button == 1 and ('1' <= button and button <= '7') then
-      self.state.selected_action = tonumber(button)
+      local action_slot = tonumber(button)
+      if action_slot and self.state.hero.actions[action_slot] then
+        self.state.selected_action = action_slot
+      end
 
     -- Logic for multiple buttons. Mostly arrow keys and enter.
     else

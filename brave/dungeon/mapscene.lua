@@ -19,7 +19,7 @@ module ('dungeon', package.seeall) do
 
   function mapscene:__init()
     self.timecontroller = timecontroller:new{map = self.map}
-    self.state = {}
+    self.state = { selected_action = 1 }
     function self.state:is_highlighted(pos)
       if not self.attacking then return false end
       return self.hero.weapon:can_attack(pos)
@@ -78,6 +78,10 @@ module ('dungeon', package.seeall) do
         img, off = self.hud.boxes.empty_off, off_x - 30
       end
       graphics.draw(img, graphics:get_screensize().x - off, i*self.hud.boxes.empty_on:getHeight())
+      local action = self.state.hero.actions[i]
+      if action then 
+        graphics.draw(action.icon, graphics:get_screensize().x - off + 24, i*self.hud.boxes.empty_on:getHeight() + 4)
+      end
     end
     graphics.draw(self.hud.foreground, graphics:get_screensize().x - self.hud.background:getWidth(), 0)
   end
