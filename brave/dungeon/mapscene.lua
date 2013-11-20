@@ -25,6 +25,11 @@ module ('dungeon', package.seeall) do
     self.hud = {
       background = love.graphics.newImage 'resources/hud/hud_lateral_fundo.png',
       foreground = love.graphics.newImage 'resources/hud/hud_lateral_frente.png',
+
+      boxes = {
+        empty_off = love.graphics.newImage 'resources/hud/gaveta_item_apagada.png',
+        empty_on  = love.graphics.newImage 'resources/hud/gaveta_item_acessa.png',
+      },
     }
   end
 
@@ -41,7 +46,6 @@ module ('dungeon', package.seeall) do
   end
 
   function mapscene:draw(graphics)
-
     graphics.push()
     graphics.scale(2.0, 2.0)
     graphics.translate(-TILE_SIZE + BORDER_X_LEFT, -TILE_SIZE + BORDER_Y_TOP)
@@ -50,7 +54,17 @@ module ('dungeon', package.seeall) do
     self.map:draw(graphics, self)
     graphics.pop()
 
-    graphics.draw(self.hud.background, graphics:get_screensize().x - self.hud.background:getWidth(), 0)
+    --graphics.draw(self.hud.background, graphics:get_screensize().x - self.hud.background:getWidth(), 0)
+    local off_x = self.hud.boxes.empty_on:getWidth() + 20
+    for i=1,7 do
+      local img, off
+      if i == self.hud.selected_action then
+        img, off = self.hud.boxes.empty_on,  off_x
+      else
+        img, off = self.hud.boxes.empty_off, off_x - 30
+      end
+      graphics.draw(img, graphics:get_screensize().x - off, i*self.hud.boxes.empty_on:getHeight())
+    end
     graphics.draw(self.hud.foreground, graphics:get_screensize().x - self.hud.background:getWidth(), 0)
   end
 end
