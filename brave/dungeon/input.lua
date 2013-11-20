@@ -24,7 +24,8 @@ module ('dungeon', package.seeall) do
       state.attacking = not state.attacking
       if state.attacking then
 
-        if state.last_attack and state.last_attack.weapon == hero.weapons.current then
+        if state.last_attack and state.last_attack.weapon == hero.weapons.current 
+          and hero:can_attack(state.last_attack.location) then
           state.attack_location = state.last_attack.location
         else
           state.attack_location = hero.position:clone()
@@ -40,6 +41,7 @@ module ('dungeon', package.seeall) do
       end
 
     elseif button == 'tab' and state.attacking then
+      -- search nearby target to auto-target
 
     -- Logic for multiple buttons. Mostly arrow keys and enter.
     else

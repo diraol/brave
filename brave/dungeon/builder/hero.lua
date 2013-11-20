@@ -3,6 +3,7 @@ module ('dungeon.builder', package.seeall) do
 
   require 'dungeon.entity'
   require 'dungeon.weapon'
+  require 'base.sound'
 
   function hero()
     local hero = dungeon.entity:new {
@@ -57,6 +58,7 @@ module ('dungeon.builder', package.seeall) do
         if not self:can_attack(target_pos) then
           return
         end
+        sound.effect 'player_attack'
 
         local target_tile = self.map:get_tile(target_pos)
         if target_tile and target_tile.entity then
