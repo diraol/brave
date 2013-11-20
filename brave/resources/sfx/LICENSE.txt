@@ -2,3 +2,6 @@ negative_2.ogg
 From: http://opengameart.org/content/click-ui-menu-sfx-yesnoselect
 License: Public Domain/CC-0
 
+attack-sounds/*
+From: http://opengameart.org/content/5-male-attack-voices
+License: CC-BY-SA 3.0
