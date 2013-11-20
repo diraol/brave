@@ -9,8 +9,8 @@ module ('dungeon.builder', package.seeall) do
       image = love.graphics.newImage 'resources/entities/herov0.png',
       p_act = 1, -- probability of  attack.
       can_attack = function(self, pos)
-        local dist = (pos - self.position):norm1()
-        return 1 <= dist and dist <= self.weapons.current.max_range and self.weapons.current.min_range <= dist
+        local dist = pos:distance(self.position)
+        return self.weapons.current.min_range <= dist and dist <= self.weapons.current.max_range
       end
     }
     hero.weapons = {
@@ -18,18 +18,26 @@ module ('dungeon.builder', package.seeall) do
     --list of available weapons
     --and current weapon
     }
-    hero.weapons.punch = dungeon.weapon:new {
+
+    hero.weapons[1] = dungeon.weapon:new {
       max_range = 1, --min distance the target has to be.
       min_range = 1, --max distance the target could be.
       damage = 10, -- damage of an attack.
       p_attack_ratio = 0.95, --success attack probability
-    }
-    hero.weapons.current = hero.weapons.punch
 
-    hero.actions = {
-      { icon = love.graphics.newImage 'resources/hud/rapier-00.png' },
-      { icon = love.graphics.newImage 'resources/hud/bow-00.png' },
+      name = 'rapier',
+      icon = love.graphics.newImage 'resources/hud/rapier-00.png',
     }
+    hero.weapons[2] = dungeon.weapon:new {
+      max_range = 3, --min distance the target has to be.
+      min_range = 2, --max distance the target could be.
+      damage = 8, -- damage of an attack.
+      p_attack_ratio = 0.95, --success attack probability
+
+      name = 'bow',
+      icon = love.graphics.newImage 'resources/hud/bow-00.png',
+    }
+    hero.weapons.current = hero.weapons[1]
 
     function hero:playturn()
       local action, direction = coroutine.yield()

@@ -19,10 +19,10 @@ module ('dungeon', package.seeall) do
 
   function mapscene:__init()
     self.timecontroller = timecontroller:new{map = self.map}
-    self.state = { selected_action = 1 }
+    self.state = {}
     function self.state:is_highlighted(pos)
       if not self.attacking then return false end
-      return self.hero.weapon:can_attack(pos)
+      return self.hero:can_attack(pos)
     end
 
     self.camerapos = vec2:new{0, 0}
@@ -71,18 +71,18 @@ module ('dungeon', package.seeall) do
     --graphics.draw(self.hud.background, graphics:get_screensize().x - self.hud.background:getWidth(), 0)
     local off_x = self.hud.boxes.empty_on:getWidth() + 23
     for i=1,7 do
-      local action, img, off = self.state.hero.actions[i], nil, nil
-      if i == self.state.selected_action then
+      local weapon, img, off = self.state.hero.weapons[i], nil, nil
+      if weapon == self.state.hero.weapons.current then
         img, off = self.hud.boxes.empty_on,  off_x
       else
         img, off = self.hud.boxes.empty_off, off_x - 24
       end
-      if not action then
+      if not weapon then
         off = off - 24
       end
       graphics.draw(img, graphics:get_screensize().x - off, i*self.hud.boxes.empty_on:getHeight())
-      if action then 
-        graphics.draw(action.icon, graphics:get_screensize().x - off + 24, i*self.hud.boxes.empty_on:getHeight() + 4)
+      if weapon then 
+        graphics.draw(weapon.icon, graphics:get_screensize().x - off + 24, i*self.hud.boxes.empty_on:getHeight() + 4)
       end
     end
     graphics.draw(self.hud.foreground, graphics:get_screensize().x - self.hud.background:getWidth(), 0)
