@@ -21,6 +21,9 @@ module ('dungeon', package.seeall) do
         self.state.confirm_attack = nil
       end
 
+    elseif #button == 1 and ('1' <= button and button <= '7') then
+      self.state.selected_action = tonumber(button)
+
     -- Logic for multiple buttons. Mostly arrow keys and enter.
     else
       local dir = button_to_direction[button]

@@ -72,7 +72,7 @@ module ('dungeon', package.seeall) do
     local off_x = self.hud.boxes.empty_on:getWidth() + 20
     for i=1,7 do
       local img, off
-      if i == self.hud.selected_action then
+      if i == self.state.selected_action then
         img, off = self.hud.boxes.empty_on,  off_x
       else
         img, off = self.hud.boxes.empty_off, off_x - 30
