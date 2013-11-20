@@ -69,16 +69,18 @@ module ('dungeon', package.seeall) do
 
     graphics.setColor(255, 255, 255)
     --graphics.draw(self.hud.background, graphics:get_screensize().x - self.hud.background:getWidth(), 0)
-    local off_x = self.hud.boxes.empty_on:getWidth() + 20
+    local off_x = self.hud.boxes.empty_on:getWidth() + 23
     for i=1,7 do
-      local img, off
+      local action, img, off = self.state.hero.actions[i], nil, nil
       if i == self.state.selected_action then
         img, off = self.hud.boxes.empty_on,  off_x
       else
-        img, off = self.hud.boxes.empty_off, off_x - 30
+        img, off = self.hud.boxes.empty_off, off_x - 24
+      end
+      if not action then
+        off = off - 24
       end
       graphics.draw(img, graphics:get_screensize().x - off, i*self.hud.boxes.empty_on:getHeight())
-      local action = self.state.hero.actions[i]
       if action then 
         graphics.draw(action.icon, graphics:get_screensize().x - off + 24, i*self.hud.boxes.empty_on:getHeight() + 4)
       end

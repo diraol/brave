@@ -65,7 +65,7 @@ module ('dungeon', package.seeall) do
         if data.type == 'entity' then
           local build = love.filesystem.load('dungeon/builder/' .. data.name .. '.lua')()
           local ent = build()
-          --ent.lifebar = lifebar_sprites
+          ent.lifebar = lifebar_sprites
           dungeonscene.timecontroller:add_entity(ent, vec2:new{i, j})
         end
       end
