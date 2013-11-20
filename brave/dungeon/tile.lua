@@ -60,7 +60,7 @@ module ('dungeon', package.seeall) do
         graphics.draw(self.set.simple, x * TILE_SIZE, y * TILE_SIZE)
       end
     end
-    if state.attacking and state.hero.weapon:can_attack(vec2:new{x, y}) then
+    if state.attacking and state.hero:can_attack(vec2:new{x, y}) then
       graphics.setColor(230, 0, 0, 127)
       graphics.rectangle('fill', x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
     end

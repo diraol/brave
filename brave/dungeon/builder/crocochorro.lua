@@ -1,4 +1,5 @@
 require 'dungeon.entity'
+require 'dungeon.weapon'
 require 'base.message'
 require 'base.vec2'
 require 'dungeon.builder.util'
@@ -8,11 +9,21 @@ return function(args)
   local crocochorro = dungeon.entity:new {
     image = love.graphics.newImage 'resources/entities/crocochorro.png',
     scale = 0.8,
-    p_attack_ratio = 0.9, --attack probability
-    p_attack_distance = 1, -- distance crocochorro can attack
-    damage = 5,
-    p_act = .2,
+    p_act = 0.2,
   }
+  crocochorro.weapons = {
+    current = nil,
+  --list of available weapons
+  --and current weapon
+  }
+  crocochorro.weapons.punch = dungeon.weapon:new {
+    max_range = 1, --min distance the target has to be.
+    min_range = 1, --max distance the target could be.
+    damage = 5, -- damage of an attack.
+    p_attack_ratio = .2, -- probability of doing something.
+  }
+  crocochorro.weapons.current = crocochorro.weapons.punch
+
   crocochorro.playturn = enemy_dumb_turn
 
   return crocochorro

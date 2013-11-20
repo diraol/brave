@@ -21,10 +21,10 @@ function random_side()
   end
 end
 
-function hero_distance(pos, range)
+function hero_distance(pos, min_range, max_range)
   local local_scene = message.send [[main]] {'current_scene'}
   hero_pos = local_scene.state.hero.position
-  return hero_pos:distance(pos) <= range
+  return hero_pos:distance(pos) <= max_range and hero_pos:distance(pos) >= min_range
 end
 
 function enemy_dumb_turn(self)
@@ -32,13 +32,15 @@ function enemy_dumb_turn(self)
 
   local wtd = math.random() -- What to do?
 
-  if wtd < self.p_attack_ratio then
-    if hero_distance(self.position, self.p_attack_distance) then
+  if wtd < self.weapons.current.p_attack_ratio then
+    -- try to attack
+    if hero_distance(self.position, self.weapons.current.min_range, self.weapons.current.max_range) then
+      -- hero on attack range
       local local_scene = message.send [[main]] {'current_scene'}
       hero_pos = local_scene.state.hero.position
       local target_tile = self.map:get_tile(hero_pos)
       if target_tile.entity then
-        target_tile.entity:take_damage(self.damage)
+        target_tile.entity:take_damage(self.weapons.current.damage)
         return 0.1
       else
         return
