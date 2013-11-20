@@ -54,12 +54,21 @@ module ('dungeon', package.seeall) do
 
         graphics.draw(self.lifebar.background, draw_pos_lifebar.x, draw_pos_lifebar.y)
 
-        local count_bar = math.floor(7 * (self.hp / self.maxhp))
+        local count_bar = math.ceil(7 * (self.hp / self.maxhp))
         for i=1,count_bar do
-          local img = ((i <= 2) and self.lifebar.life.red) or
-                      ((i <= 4) and self.lifebar.life.yellow) or
-                      self.lifebar.life.green
-          graphics.draw(img, draw_pos_lifebar.x + 12 + i * 11, draw_pos_lifebar.y + 7)
+          if i < count_bar then
+            graphics.setColor(0, 255, 0)
+          else
+            local diff = (count_bar - (7 * (self.hp / self.maxhp))) * 2
+
+            -- diff = 0 ->   0, 255
+            -- diff = 1 -> 255, 255
+            -- diff = 2 -> 255,   0
+            local red   = math.min(255, diff * 255)
+            local green = math.min(255, 510 - diff * 255)
+            graphics.setColor(red, green, 0)
+          end
+          graphics.draw(self.lifebar.life.gray, draw_pos_lifebar.x + 12 + i * 11, draw_pos_lifebar.y + 7)
         end
 
         graphics.pop()

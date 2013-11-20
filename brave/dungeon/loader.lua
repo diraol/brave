@@ -36,6 +36,7 @@ module ('dungeon', package.seeall) do
         red    = love.graphics.newImage 'resources/hud/pt_vida_VERMELHA.png',
         yellow = love.graphics.newImage 'resources/hud/pt_vida_AMARELA.png',
         green  = love.graphics.newImage 'resources/hud/pt_vida_VERDE.png',
+        gray   = love.graphics.newImage 'resources/hud/pt_vida_CINZA.png',
       },
     }
 
@@ -69,7 +70,7 @@ module ('dungeon', package.seeall) do
         if data.type == 'entity' then
           local build = love.filesystem.load('dungeon/builder/' .. data.name .. '.lua')()
           local ent = build()
-          ent.lifebar = lifebar_sprites
+          --ent.lifebar = lifebar_sprites
           dungeonscene.timecontroller:add_entity(ent, vec2:new{i, j})
         end
       end
