@@ -11,7 +11,10 @@ module ('dungeon', package.seeall) do
   }
 
   function player_input_handler(self, button)
-    if not self.timecontroller:accepting_input() then return end
+    if not self.timecontroller:accepting_input() then
+      self.timecontroller.delay_multiplier = 0.0
+      return
+    end
     function run_action(...)
       self.timecontroller:send_input(...)
     end
@@ -42,6 +45,9 @@ module ('dungeon', package.seeall) do
 
     elseif button == 'tab' and state.attacking then
       -- search nearby target to auto-target
+
+    elseif button == ' ' then
+      run_action('interact')      
 
     -- Logic for multiple buttons. Mostly arrow keys and enter.
     else

@@ -4,8 +4,9 @@ module ('dungeon.builder', package.seeall) do
   require 'dungeon.entity'
   require 'dungeon.weapon'
   require 'base.sound'
+  require 'dungeon.loader'
 
-  function hero()
+  return function()
     local hero = dungeon.entity:new {
       image = love.graphics.newImage 'resources/entities/herov0.png',
       p_act = 1, -- probability of  attack.
@@ -41,6 +42,7 @@ module ('dungeon.builder', package.seeall) do
     hero.weapons.current = hero.weapons[1]
 
     function hero:playturn()
+      self.timecontroller.delay_multiplier = self.timecontroller.original_delay_multiplier
       local action, direction = coroutine.yield()
 
       if action == 'move' then
@@ -64,6 +66,12 @@ module ('dungeon.builder', package.seeall) do
         if target_tile and target_tile.entity then
           target_tile.entity:take_damage(self.weapons.current.damage)
           return 0.1
+        end
+
+      elseif action == 'interact' then
+        local current_tile = self.map:get_tile(self.position)
+        if current_tile.tilename == 'stairs' then
+          dungeon.change_level(self, dungeon.load_level "2")
         end
 
       else

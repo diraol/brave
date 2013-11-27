@@ -7,10 +7,13 @@ module ('dungeon', package.seeall) do
   timecontroller = lux.object.new{
     map = nil,
     delay = 0.0,
+
+    delay_multiplier = 1.0,
     waiting_delay = false,
   }
 
   function timecontroller:__init()
+    self.original_delay_multiplier = self.delay_multiplier
     self.timeline = {}
     self.routine = coroutine.create(timecontroller.run)
   end
@@ -71,7 +74,7 @@ module ('dungeon', package.seeall) do
       end
 
       if self.delay > 0.0 then 
-        self.delay = self.delay * 0.1 -- DEBUG PQ DEMORA D+
+        self.delay = self.delay * self.delay_multiplier -- DEBUG PQ DEMORA D+
         self.waiting_delay = true
         coroutine.yield()
         self.waiting_delay = false

@@ -6,7 +6,6 @@ module ('dungeon', package.seeall) do
   require 'dungeon.mapscene'
   require 'dungeon.entity'
   require 'dungeon.input'
-  require 'dungeon.builder.hero'
 
   function load_level_file(filename)
     local content = love.filesystem.read("dungeon/levels/" .. filename .. ".txt"):gsub("\r", "")
@@ -35,6 +34,9 @@ module ('dungeon', package.seeall) do
           simple = love.graphics.newImage 'resources/tiles/wall-brickwood-00-bottom.png',
           grid_offset = vec2:new{0, -48},
           grid = love.graphics.newImage 'resources/tiles/wall-brickwood-00-alltops.png',
+        },
+        stairs = {
+          simple = love.graphics.newImage 'resources/tiles/floor-stairs-00.png',
         },
       },
       --[[
@@ -84,9 +86,7 @@ module ('dungeon', package.seeall) do
     assert(resources.types['.'], "Missing tile type '.'")
   end
 
-  function enter()
-    local level_name = "1"
-
+  function load_level(level_name)
     init_resources()
 
     local content, width, height = load_level_file(level_name)
@@ -104,7 +104,8 @@ module ('dungeon', package.seeall) do
         -- Use um chão padrão para todo os objetos/entidades
         local tile = (data.type == 'tile') and data or resources.types['.']
         map.matrix[j][i].passable = not tile.blocks
-        map.matrix[j][i].set   = resources.tileset[tile.name]
+        map.matrix[j][i].set      = resources.tileset[tile.name]
+        map.matrix[j][i].tilename = tile.name
 
         -- Coloca a entidade na cena
         if data.type == 'entity' then
@@ -118,15 +119,24 @@ module ('dungeon', package.seeall) do
 
     dungeonscene.state.tile_quads = resources.tile_quads
     dungeonscene.state.selection_image = resources.selection_image
-    dungeonscene.input_pressed = player_input_handler
+    return dungeonscene
+  end
 
-    local hero = builder.hero()
-    hero.lifebar = resources.lifebar_sprites
+  function change_level(hero, dungeonscene)
     dungeonscene.state.hero = hero
-
+    dungeonscene.input_pressed = player_input_handler
     dungeonscene.timecontroller:add_entity(hero, vec2:new{1, 1})
 
     message.send [[main]] {'change_scene', dungeonscene }
+  end
+
+  function enter()
+    init_resources()
+
+    local hero = love.filesystem.load('dungeon/builder/hero.lua')()()
+    hero.lifebar = resources.lifebar_sprites
+
+    change_level(hero, load_level "1")
   end
 
 end
