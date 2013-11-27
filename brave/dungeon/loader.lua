@@ -115,6 +115,11 @@ module ('dungeon', package.seeall) do
           ent.lifebar = resources.lifebar_sprites
           dungeonscene.timecontroller:add_entity(ent, vec2:new{i, j})
 
+        elseif data.type == 'body' then
+          local build = love.filesystem.load('dungeon/builder/' .. data.name .. '.lua')()
+          local b = build()
+          map:get_tile(i, j):add_body(b)
+
         elseif data.type == 'hero' then
           dungeonscene.hero_start_position = vec2:new{i, j}
         end

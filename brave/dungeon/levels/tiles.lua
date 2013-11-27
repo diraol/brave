@@ -7,4 +7,5 @@ return {
 ["F"] = { type = 'entity', name = 'falcoelho' },
 ["C"] = { type = 'entity', name = 'crocochorro' },
 ["P"] = { type = 'entity', name = 'pandarila' },
+["!"] = { type = 'body', name = "life_potion" },
 }

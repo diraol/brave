@@ -32,6 +32,21 @@ module ('dungeon', package.seeall) do
   function tile:remove_entity()
     self.entity = nil
   end
+
+  function tile:add_body(body)
+    body.tile = self
+    table.insert(self.bodies, body)
+  end
+
+  function tile:remove_body(body)
+    for i, b in ipairs(self.bodies) do
+      if b == body then
+        table.remove(self.bodies, i)
+        body.tile = nil
+        return
+      end
+    end
+  end
   
   function tile:draw(graphics, x, y, scene)
     local state = scene.state
@@ -67,6 +82,9 @@ module ('dungeon', package.seeall) do
     if self.entity then
       graphics.setColor(255, 255, 255)
       self.entity:draw(graphics)
+    elseif #self.bodies > 0 then
+      graphics.setColor(255, 255, 255)
+      self.bodies[1]:draw(graphics, x, y)
     end    
   end
 end
