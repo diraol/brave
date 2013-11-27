@@ -8,7 +8,7 @@ module ('dungeon', package.seeall) do
     map = nil,
     delay = 0.0,
 
-    delay_multiplier = 1.0,
+    delay_multiplier = 0.5,
     waiting_delay = false,
   }
 

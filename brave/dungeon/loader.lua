@@ -92,13 +92,14 @@ module ('dungeon', package.seeall) do
     local content, width, height = load_level_file(level_name)
     assert(#content == (height * width), "Content size (" .. #content .. ") isn't " .. width .. " x " .. height)
 
-    local map = map:new { width = width, height = height }
+    local map = map:new { width = width, height = height, name = level_name }
     local dungeonscene = mapscene:new{ map = map }
 
     for j = 1,map.height do
       for i = 1,map.width do
         local start = (j - 1) * width + i
         local data = resources.types[content:sub(start, start)]
+        print("oi")
         assert(data, "Unknown tile type: '" .. content:sub(start, start) .. "'")
 
         -- Use um chão padrão para todo os objetos/entidades
@@ -113,6 +114,9 @@ module ('dungeon', package.seeall) do
           local ent = build()
           ent.lifebar = resources.lifebar_sprites
           dungeonscene.timecontroller:add_entity(ent, vec2:new{i, j})
+
+        elseif data.type == 'hero' then
+          dungeonscene.hero_start_position = vec2:new{i, j}
         end
       end
     end
@@ -125,7 +129,7 @@ module ('dungeon', package.seeall) do
   function change_level(hero, dungeonscene)
     dungeonscene.state.hero = hero
     dungeonscene.input_pressed = player_input_handler
-    dungeonscene.timecontroller:add_entity(hero, vec2:new{1, 1})
+    dungeonscene.timecontroller:add_entity(hero, dungeonscene.hero_start_position)
 
     message.send [[main]] {'change_scene', dungeonscene }
   end
