@@ -23,6 +23,10 @@ return function(args)
     p_attack_ratio = 0.9, --success attack probability
   }
   pandarila.weapons.current = pandarila.weapons.punch
+  pandarila.on_take_damage = pursuit_on_damage
+  function pandarila:calculate_p_attack_multiplier()
+    return math.max(0.5, 1 - self.hp / self.maxhp)
+  end
 
   pandarila.playturn = enemy_dumb_turn
 

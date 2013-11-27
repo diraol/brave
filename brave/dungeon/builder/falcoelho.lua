@@ -23,6 +23,9 @@ return function(args)
     p_attack_ratio = 0.1,
   }
   falcoelho.weapons.current = falcoelho.weapons.punch
+  function falcoelho:calculate_p_attack_multiplier()
+    return self.hp / self.maxhp
+  end
 
   falcoelho.playturn = enemy_dumb_turn
 

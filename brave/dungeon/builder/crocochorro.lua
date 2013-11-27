@@ -23,6 +23,10 @@ return function(args)
     p_attack_ratio = .2, -- probability of doing something.
   }
   crocochorro.weapons.current = crocochorro.weapons.punch
+  crocochorro.on_take_damage = pursuit_on_damage
+  function crocochorro:calculate_p_attack_multiplier()
+    return math.max(0.5, self.hp / self.maxhp)
+  end
 
   crocochorro.playturn = enemy_dumb_turn
 

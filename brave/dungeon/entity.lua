@@ -28,6 +28,10 @@ module ('dungeon', package.seeall) do
   end
 
   function entity:take_damage(damage)
+    if self.on_take_damage then
+      self:on_take_damage()
+    end
+
     self.hp = self.hp - damage
     if self.hp <= 0 then
       self:die()
