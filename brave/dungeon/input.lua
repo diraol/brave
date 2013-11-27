@@ -2,6 +2,7 @@
 module ('dungeon', package.seeall) do
 
   require 'base.sound'
+  require 'base.message'
 
   local button_to_direction = {
     right = vec2:new{ 1, 0},
@@ -11,6 +12,10 @@ module ('dungeon', package.seeall) do
   }
 
   function player_input_handler(self, button)
+    if button == 'escape' and not self.state.attacking then
+      message.send [[main]] {'gotomenu'}
+    end
+
     if not self.timecontroller:accepting_input() then
       self.timecontroller.delay_multiplier = 0.0
       return

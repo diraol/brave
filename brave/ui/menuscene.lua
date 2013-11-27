@@ -54,6 +54,9 @@ module ('ui', package.seeall) do
           if button then button:onclick() end
         end
       end
+      if key == 'escape' then
+        message.send [[main]] {'change_scene', nil}
+      end
     end
   end
 

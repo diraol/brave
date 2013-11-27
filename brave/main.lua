@@ -24,6 +24,10 @@ function main_message_handler.change_scene(newscene, stack)
   current_scene:focus()
 end
 
+function main_message_handler.gotomenu()
+  main_message_handler.change_scene(ui.mainmenu())
+end
+
 function main_message_handler.current_scene()
   return current_scene
 end
@@ -52,11 +56,7 @@ function love.update(dt)
 end
 
 function love.keypressed (button)
-  if button == "escape" then
-    love.event.push("quit")
-  else
-    current_scene:input_pressed(button)
-  end
+  current_scene:input_pressed(button)
 end
 
 function love.keyreleased (button)
