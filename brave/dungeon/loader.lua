@@ -99,7 +99,6 @@ module ('dungeon', package.seeall) do
       for i = 1,map.width do
         local start = (j - 1) * width + i
         local data = resources.types[content:sub(start, start)]
-        print("oi")
         assert(data, "Unknown tile type: '" .. content:sub(start, start) .. "'")
 
         -- Use um chão padrão para todo os objetos/entidades
