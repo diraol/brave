@@ -73,10 +73,10 @@ module ('dungeon.builder', package.seeall) do
         if #current_tile.bodies > 0 then
           current_tile.bodies[1]:interact(self)
         else
-          --if current_tile.tilename == 'stairs' then
+          if current_tile.tilename == 'stairs' then
             local next_level = tostring(tonumber(self.map.name) + 1)
             dungeon.change_level(self, dungeon.load_level(next_level))
-          --end
+          end
         end
 
       else
